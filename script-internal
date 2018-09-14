@@ -1,0 +1,29 @@
+#!/bin/bash
+
+if [ -z $1 ]
+then
+echo "error = No filename provided"
+        exit
+elif [ $# -gt 1 ]
+then
+echo "The script takes only 1 argument i.e. filename"
+        exit
+elif [ "$1" == "-h" -o "$1" == "--help" ]; then
+echo "Usage: `basename $0`
+./script <filename> e.g ./script passwd"
+  exit 0
+fi
+
+fname=$1
+if [ -f $fname ]
+then
+exec < $fname
+
+while read file
+do
+	IFS=':'; set "$(<$fname)"; read f1 f2 f3; echo $f3
+done
+else
+echo "no such file"
+        exit
+fi
